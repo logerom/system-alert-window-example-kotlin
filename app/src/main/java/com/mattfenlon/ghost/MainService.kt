@@ -14,7 +14,7 @@ import android.widget.FrameLayout
 /**
  * Created by noln on 22/09/2019.
  */
-class MainService : Service(), View.OnTouchListener {
+class MainService : Service() {
 
     private lateinit var windowManager: WindowManager
     private var floatyView: View? = null
@@ -43,7 +43,7 @@ class MainService : Service(), View.OnTouchListener {
 
         params = LayoutParams(
                 LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT,
+                LayoutParams.MATCH_PARENT,
                 layoutParamsType,
                 0,
                 PixelFormat.TRANSLUCENT)
@@ -78,11 +78,18 @@ class MainService : Service(), View.OnTouchListener {
 
         floatyView = inflater.inflate(R.layout.floating_view, interceptorLayout)
         floatyView?.let {
-            it.setOnTouchListener(this)
-            windowManager.addView(floatyView, params)
+            windowManager.addView(it, params)
         } ?: run {
             Log.e(TAG, "Layout Inflater Service is null; can't inflate and display R.layout.floating_view")
         }
+    }
+
+    fun onClickCancel(v: View){
+        onDestroy()
+    }
+
+    fun onClickCommand(v: View){
+
     }
 
     override fun onDestroy() {
@@ -94,16 +101,7 @@ class MainService : Service(), View.OnTouchListener {
         }
     }
 
-    override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
-        view.performClick()
 
-        Log.v(TAG, "onTouch...")
-
-        // Kill service
-        onDestroy()
-
-        return true
-    }
 
     companion object {
         private val TAG = MainService::class.java.simpleName
