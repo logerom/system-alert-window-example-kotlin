@@ -43,7 +43,7 @@ class MainService : Service() {
 
         params = LayoutParams(
                 LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT,
                 layoutParamsType,
                 0,
                 PixelFormat.TRANSLUCENT)
@@ -85,7 +85,7 @@ class MainService : Service() {
     }
 
     fun onClickCancel(v: View){
-        onDestroy()
+        stopSelf()
     }
 
     fun onClickCommand(v: View){

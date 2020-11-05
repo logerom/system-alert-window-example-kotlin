@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         val svc = Intent(this, MainService::class.java)
 
-        stopService(svc)
         startService(svc)
 
         finish()
