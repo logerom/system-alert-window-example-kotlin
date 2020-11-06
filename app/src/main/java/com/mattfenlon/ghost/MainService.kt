@@ -34,32 +34,34 @@ class MainService : Service() {
     private fun addOverlayView() {
 
         val params: LayoutParams
-        val layoutParamsType: Int = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            LayoutParams.TYPE_APPLICATION_OVERLAY
-        } else {
-            @Suppress("DEPRECATION")
-            LayoutParams.TYPE_PHONE
-        }
+        val layoutParamsType: Int =
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                LayoutParams.TYPE_APPLICATION_OVERLAY
+            } else {
+                @Suppress("DEPRECATION")
+                LayoutParams.TYPE_PHONE
+            }
 
         params = LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT,
-                layoutParamsType,
-                LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT,
-                PixelFormat.TRANSLUCENT)
+            LayoutParams.MATCH_PARENT,
+            LayoutParams.WRAP_CONTENT,
+            layoutParamsType,
+            LayoutParams.FLAG_NOT_TOUCHABLE,
+            PixelFormat.TRANSLUCENT
+        )
 
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        with(inflater.inflate(R.layout.floating_view, null)){
+        with(inflater.inflate(R.layout.floating_view, null)) {
             windowManager.addView(this, params)
         }
     }
 
-    fun onClickCancel(v: View){
+    fun onClickCancel(v: View) {
         stopSelf()
     }
 
-    fun onClickCommand(v: View){
+    fun onClickCommand(v: View) {
 
     }
 
